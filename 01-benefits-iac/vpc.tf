@@ -12,9 +12,17 @@ provider "aws" {
     region = "us-east-1"
   
 }
+
+
 resource "aws_vpc" "demo_vpc" {
     cidr_block = "10.0.0.0/16"
+
+    tags = {
+  Name = "Terraform VPC"
 }
+}
+
+
 
 resource "aws_subnet" "public_subnet" {
   vpc_id = aws_vpc.demo_vpc.id
@@ -33,7 +41,7 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_route_table" "public_rtb" {
     vpc_id = aws_vpc.demo_vpc.id
 
-    route = {
+    route  {
         cidr_block = "0.0.0.0/0"
         gateway_id = aws_internet_gateway.igw.id
 
